@@ -38,10 +38,11 @@
 
 export default function App() {
   const fecha = new Date().toLocaleString();
-  
+
   return (
     <main>
-      <h1>Hola SENA</h1>
+      <h1>HOLA SENA</h1>
+      {fecha}
     </main>
   );
 }
