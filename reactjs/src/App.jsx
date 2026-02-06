@@ -32,5 +32,19 @@
 //   )
 // }
 
-// export default App 
-export default function App() { const fecha = new Date().toLocaleString(); return (<main> <h1>Hola SENA</h1> {fecha}</main>)}
+// export default App
+import "./App.css";
+
+export default function App() {
+  return (
+    <main>
+      <h1>Hola, soy Samu - Aprendiz ADSO</h1>
+      <p>
+        {" "}
+        Hola, nosotros somos el grupo #4 de React.js en el cual aprenderemos a
+        utilizar las herramientas necesarias para realizar una página web y
+        poder manejar front-end
+      </p>
+    </main>
+  );
+}
