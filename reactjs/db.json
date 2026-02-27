@@ -13,6 +13,20 @@
       "telefono": "3137053041",
       "correo": "negrojuan@gmail.com",
       "etiqueta": "estudiante"
+    },
+    {
+      "id": "fdfa",
+      "nombre": "Steveen",
+      "telefono": "3132025694",
+      "correo": "juan@gmail",
+      "etiqueta": "Trabajador"
+    },
+    {
+      "id": "ec1a",
+      "nombre": "juliana",
+      "telefono": "3132025694",
+      "correo": "nsajncjoacn@gmail.com",
+      "etiqueta": "estudiante"
     }
   ]
 }
