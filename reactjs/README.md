@@ -1,16 +1,43 @@
-# React + Vite
+# Agenda ADSO - ReactJS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto de gestión de contactos desarrollado con React + Vite y JSON Server.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ Agregar contactos (nombre, teléfono, correo, etiqueta)
+- ✅ Eliminar contactos
+- ✅ Buscar contactos por nombre, correo, teléfono o etiqueta
+- ✅ Ordenar contactos (A-Z / Z-A)
+- ✅ Persistencia de datos con JSON Server
 
-## React Compiler
+## Tecnologías
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend:** React 19 + Vite
+- **Estilos:** Tailwind CSS
+- **Backend:** JSON Server
+- **Validaciones:** Validación de formularios
 
-## Expanding the ESLint configuration
+## Cómo ejecutar
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Instalar dependencias
+npm install
+
+# Iniciar el servidor de desarrollo (React)
+npm run dev
+
+# Iniciar JSON Server (en otra terminal)
+npm run server
+```
+
+## Puertos
+
+- **Frontend:** http://localhost:5173
+- **JSON Server:** http://localhost:3001
+
+## Autor
+
+- Nombre: Samuel Salazar
+- Ficha: 3223876
+- Instructor: Gustavo Adolfo Bolaños Dorado
+
