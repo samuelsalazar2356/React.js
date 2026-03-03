@@ -1,18 +1,33 @@
 {
   "contactos": [
     {
-      "id": "4e7e",
-      "nombre": "Steveen",
-      "telefono": "3137053041",
-      "correo": "juan@gmail",
-      "etiqueta": "estudiante"
+      "id": "5c25",
+      "nombre": "jeijonsh",
+      "telefono": "23232312",
+      "correo": "jeishonsh@gmail.com",
+      "etiqueta": "profesor"
     },
     {
-      "id": "2715",
-      "nombre": "Yeisons",
-      "telefono": "3137053041",
-      "correo": "negrojuan@gmail.com",
+      "id": "3da8",
+      "nombre": "stiven",
+      "telefono": "12356778",
+      "correo": "stevenfernando@gmail.com",
+      "etiqueta": "empresario"
+    },
+    {
+      "id": "f417",
+      "nombre": "Mateo",
+      "telefono": "1020114921",
+      "correo": "mateo@sena.edu.com",
+      "etiqueta": "Estudiante"
+    },
+    {
+      "id": "fef2",
+      "nombre": "samuel ",
+      "telefono": "2222315",
+      "correo": "SAmuelsalazar2356@gmail.com",
       "etiqueta": "estudiante"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -1,37 +1,37 @@
-// Punto base de la API local (ajusta el puerto si usas otro)
-const API = "http://localhost:3002/contactos";
+const BASE_URL = "http://localhost:3001/contactos";
 
-// GET: listar contactos
+// Listar todos los contactos
 export async function listarContactos() {
-  // Hacemos un GET a /contactos
-  const res = await fetch(API);
-  // Si la respuesta no es OK (>=400), lanzamos error
-  if (!res.ok) throw new Error("Error al listar contactos");
-  // Parseamos JSON y lo retornamos (array de contactos)
-  return res.json();
+  const response = await fetch(BASE_URL);
+  if (!response.ok) {
+    throw new Error("Error al listar contactos");
+  }
+  return await response.json();
 }
 
-// POST: crear contacto
-export async function crearContacto(data) {
-  // Hacemos un POST a /contactos con body en JSON
-  const res = await fetch(API, {
+// Crear un nuevo contacto
+export async function crearContacto(contacto) {
+  const response = await fetch(BASE_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" }, // Indicamos JSON
-    body: JSON.stringify(data), // Enviamos el objeto del formulario
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(contacto),
   });
-  // Validamos respuesta
-  if (!res.ok) throw new Error("Error al crear el contacto");
-  // Devolvemos el contacto creado que regresa la API (con id)
-  return res.json();
+  if (!response.ok) {
+    throw new Error("Error al crear contacto");
+  }
+  return await response.json();
 }
 
-// DELETE: eliminar contacto por id
+// Eliminar un contacto por ID
 export async function eliminarContactoPorId(id) {
-  // Hacemos un DELETE a /contactos/:id
-  const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-  // Validamos respuesta
-  if (!res.ok) throw new Error("Error al eliminar el contacto");
-  // Devolvemos true indicando éxito
-  return true;
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: "DELETE",
+  });
+  if (!response.ok) {
+    throw new Error("Error al eliminar contacto");
+  }
+  return await response.json();
 }
 
