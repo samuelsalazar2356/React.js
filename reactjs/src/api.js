@@ -1,3 +1,6 @@
+// Archivo: src/api.js
+// Capa de acceso a datos de Agenda ADSO (llamados a la API REST).
+
 const BASE_URL = "http://localhost:3001/contactos";
 
 // Listar todos los contactos

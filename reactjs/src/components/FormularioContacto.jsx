@@ -17,7 +17,11 @@ export default function FormularioContacto({ onAgregar }) {
   const [enviando, setEnviando] = useState(false);
 
   const onChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value,
+    }));
   };
 
   const validarFormulario = () => {
@@ -32,6 +36,8 @@ export default function FormularioContacto({ onAgregar }) {
     } else if (form.telefono.trim().length < 7) {
       nuevosErrores.telefono =
         "El teléfono debe tener mínimo 7 caracteres.";
+    } else if (isNaN(form.telefono)) {
+      nuevosErrores.telefono = "El teléfono solo debe contener números.";
     }
 
     if (!form.correo.trim()) {
@@ -72,6 +78,8 @@ export default function FormularioContacto({ onAgregar }) {
       });
 
       alert("Contacto guardado correctamente ✅");
+    } catch (error) {
+      console.error("Error al guardar:", error);
     } finally {
       setEnviando(false);
     }
@@ -157,3 +165,4 @@ export default function FormularioContacto({ onAgregar }) {
     </form>
   );
 }
+

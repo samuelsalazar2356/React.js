@@ -12,25 +12,25 @@ export default function App() {
   const [contactos, setContactos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
-
   const [busqueda, setBusqueda] = useState("");
   const [ordenAsc, setOrdenAsc] = useState(true);
 
   useEffect(() => {
-    async function cargarContactos() {
+    const cargarContactos = async () => {
       try {
+        setCargando(true);
         setError("");
         const data = await listarContactos();
         setContactos(data);
       } catch (error) {
-        console.error(error);
+        console.error("Error al cargar contactos:", error);
         setError(
           "No se pudieron cargar los contactos. Verifica que JSON Server esté encendido."
         );
       } finally {
         setCargando(false);
       }
-    }
+    };
 
     cargarContactos();
   }, []);
@@ -86,6 +86,11 @@ export default function App() {
     return 0;
   });
 
+  const totalVisibles = contactosOrdenados.length;
+  const mensajeCantidad = totalVisibles === 1 
+    ? "Mostrando un contacto" 
+    : `Mostrando ${totalVisibles} contactos`;
+
   return (
     <main className="min-h-screen bg-gray-50">
       <header className="max-w-6xl mx-auto px-6 pt-8">
@@ -102,60 +107,56 @@ export default function App() {
 
       <section className="max-w-6xl mx-auto px-6 py-8 space-y-6">
         {error && (
-          <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
-            {error}
+          <div className="mb-4 rounded-xl bg-red-50 border border-red-200 px-4 py-3">
+            <p className="text-sm font-medium text-red-700">{error}</p>
           </div>
         )}
 
-        {cargando && (
-          <div className="rounded-xl bg-purple-50 border border-purple-200 px-4 py-3 text-sm text-purple-700">
-            Cargando contactos desde la API...
-          </div>
-        )}
+        {cargando ? (
+          <p className="text-sm text-gray-500">Cargando contactos...</p>
+        ) : (
+          <>
+            <FormularioContacto onAgregar={agregarContacto} />
 
-        <FormularioContacto onAgregar={agregarContacto} />
-
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <input
-            type="text"
-            className="w-full md:flex-1 rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500 text-sm"
-            placeholder="Buscar por nombre, correo, etiqueta o teléfono..."
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
-          />
-          <button
-            type="button"
-            onClick={() => setOrdenAsc((prev) => !prev)}
-            className="bg-gray-100 text-gray-700 text-sm px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-200"
-          >
-            {ordenAsc ? "Ordenar Z-A" : "Ordenar A-Z"}
-          </button>
-        </div>
-
-        <p className="text-sm text-gray-500 mb-4">
-          {contactosOrdenados.length === 1 
-            ? `Mostrando 1 contacto` 
-            : `Mostrando ${contactosOrdenados.length} contactos`}
-        </p>
-
-        <div className="space-y-4">
-          {contactosOrdenados.length === 0 && !cargando && (
-            <p className="text-sm text-gray-500">
-              {contactos.length === 0 
-                ? "No hay contactos aún. Agrega el primero usando el formulario." 
-                : "No se encontraron contactos que coincidan con la búsqueda."}
-            </p>
-          )}
-          {contactosOrdenados.length > 0 && (
-            contactosOrdenados.map((c) => (
-              <ContactoCard
-                key={c.id}
-                {...c}
-                onEliminar={() => eliminarContacto(c.id)}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+              <input
+                type="text"
+                className="w-full md:flex-1 rounded-xl border-gray-300 focus:ring-purple-500 focus:border-purple-500 text-sm"
+                placeholder="Buscar por nombre, correo, etiqueta o teléfono..."
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
               />
-            ))
-          )}
-        </div>
+              <button
+                type="button"
+                onClick={() => setOrdenAsc((prev) => !prev)}
+                className="bg-gray-100 text-gray-700 text-sm px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-200"
+              >
+                {ordenAsc ? "Ordenar Z-A" : "Ordenar A-Z"}
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-500 mb-4">
+              {mensajeCantidad}
+            </p>
+
+            <div className="space-y-4">
+              {contactosOrdenados.length === 0 && (
+                <p className="text-sm text-gray-500">
+                  {contactos.length === 0 
+                    ? "No hay contactos aún. Agrega el primero usando el formulario." 
+                    : "No se encontraron contactos que coincidan con la búsqueda."}
+                </p>
+              )}
+              {contactosOrdenados.map((c) => (
+                <ContactoCard
+                  key={c.id}
+                  {...c}
+                  onEliminar={() => eliminarContacto(c.id)}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </section>
     </main>
   );
