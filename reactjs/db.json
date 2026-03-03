@@ -1,13 +1,6 @@
 {
   "contactos": [
     {
-      "id": "5c25",
-      "nombre": "jeijonsh",
-      "telefono": "23232312",
-      "correo": "jeishonsh@gmail.com",
-      "etiqueta": "profesor"
-    },
-    {
       "id": "3da8",
       "nombre": "stiven",
       "telefono": "12356778",

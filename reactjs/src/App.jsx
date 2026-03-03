@@ -3,6 +3,7 @@ import {
   listarContactos,
   crearContacto,
   eliminarContactoPorId,
+  actualizarContacto,
 } from "./api";
 
 import FormularioContacto from "./components/FormularioContacto";
@@ -14,6 +15,7 @@ export default function App() {
   const [error, setError] = useState("");
   const [busqueda, setBusqueda] = useState("");
   const [ordenAsc, setOrdenAsc] = useState(true);
+  const [contactoEditar, setContactoEditar] = useState(null);
 
   useEffect(() => {
     const cargarContactos = async () => {
@@ -58,6 +60,31 @@ export default function App() {
       console.error(error);
       setError("No se pudo eliminar el contacto. Intenta nuevamente.");
     }
+  };
+
+  const actualizarContactoHandler = async (id, contactoActualizado) => {
+    try {
+      setError("");
+      const actualizado = await actualizarContacto(id, contactoActualizado);
+      setContactos((prev) =>
+        prev.map((c) => (c.id === id ? actualizado : c))
+      );
+      setContactoEditar(null);
+    } catch (error) {
+      console.error(error);
+      setError("No se pudo actualizar el contacto. Intenta nuevamente.");
+      throw error;
+    }
+  };
+
+  const iniciarEdicion = (contacto) => {
+    setContactoEditar(contacto);
+    // Scroll hacia el formulario
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelarEdicion = () => {
+    setContactoEditar(null);
   };
 
   const contactosFiltrados = contactos.filter((c) => {
@@ -116,7 +143,12 @@ export default function App() {
           <p className="text-sm text-gray-500">Cargando contactos...</p>
         ) : (
           <>
-            <FormularioContacto onAgregar={agregarContacto} />
+            <FormularioContacto 
+              onAgregar={agregarContacto} 
+              contactoEditar={contactoEditar}
+              onActualizar={actualizarContactoHandler}
+              onCancelar={cancelarEdicion}
+            />
 
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
               <input
@@ -152,6 +184,7 @@ export default function App() {
                   key={c.id}
                   {...c}
                   onEliminar={() => eliminarContacto(c.id)}
+                  onEditar={() => iniciarEdicion(c)}
                 />
               ))}
             </div>

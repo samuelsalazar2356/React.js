@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function FormularioContacto({ onAgregar }) {
+export default function FormularioContacto({ onAgregar, contactoEditar, onActualizar, onCancelar }) {
   const [form, setForm] = useState({
     nombre: "",
     telefono: "",
@@ -15,6 +15,21 @@ export default function FormularioContacto({ onAgregar }) {
   });
 
   const [enviando, setEnviando] = useState(false);
+
+  // Determinar si estamos en modo edición
+  const esEdicion = !!contactoEditar;
+
+  // Cargar datos del contacto a editar
+  useEffect(() => {
+    if (contactoEditar) {
+      setForm({
+        nombre: contactoEditar.nombre || "",
+        telefono: contactoEditar.telefono || "",
+        correo: contactoEditar.correo || "",
+        etiqueta: contactoEditar.etiqueta || "",
+      });
+    }
+  }, [contactoEditar]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -62,8 +77,16 @@ export default function FormularioContacto({ onAgregar }) {
 
     try {
       setEnviando(true);
-      await onAgregar(form);
 
+      if (esEdicion) {
+        await onActualizar(contactoEditar.id, form);
+        alert("Contacto actualizado correctamente ✅");
+      } else {
+        await onAgregar(form);
+        alert("Contacto guardado correctamente ✅");
+      }
+
+      // Limpiar formulario
       setForm({
         nombre: "",
         telefono: "",
@@ -76,8 +99,6 @@ export default function FormularioContacto({ onAgregar }) {
         telefono: "",
         correo: "",
       });
-
-      alert("Contacto guardado correctamente ✅");
     } catch (error) {
       console.error("Error al guardar:", error);
     } finally {
@@ -156,12 +177,26 @@ export default function FormularioContacto({ onAgregar }) {
         />
       </div>
 
-      <button
-        disabled={enviando}
-        className="w-full md:w-auto bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
-      >
-        {enviando ? "Guardando..." : "Agregar contacto"}
-      </button>
+      <div className="flex gap-3">
+        <button
+          disabled={enviando}
+          className="flex-1 md:flex-none bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
+        >
+          {enviando 
+            ? (esEdicion ? "Actualizando..." : "Guardando...") 
+            : (esEdicion ? "Actualizar contacto" : "Agregar contacto")}
+        </button>
+        
+        {esEdicion && (
+          <button
+            type="button"
+            onClick={onCancelar}
+            className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-xl font-semibold shadow-sm"
+          >
+            Cancelar
+          </button>
+        )}
+      </div>
     </form>
   );
 }
