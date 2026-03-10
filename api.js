@@ -1,5 +1,9 @@
-// Punto base de la API local (ajusta el puerto si usas otro)
-const API = "http://localhost:3003/contactos";
+// Punto base de la API - Configurable para desarrollo local o producción
+// Desarrollo local: http://localhost:3003/contactos
+// Producción (Render): https://agenda-adso-api-ljjm.onrender.com/contactos
+const API_BASE = import.meta.env.VITE_API_URL || "https://agenda-adso-api-ljjm.onrender.com/contactos";
+
+const API = API_BASE;
 
 // GET: listar contactos
 export async function listarContactos() {
